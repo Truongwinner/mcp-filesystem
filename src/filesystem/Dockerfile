@@ -2,11 +2,17 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-COPY . .                    # copy toàn bộ mã nguồn repo
+# Copy toàn bộ source từ GitHub repo của Sếp
+COPY . .
 
-RUN npm install            # cài dependencies
-RUN npm run build          # build TypeScript nếu cần
+# Cài đặt dependencies
+RUN npm install
 
-HEALTHCHECK NONE           # disable healthcheck (Coolify)
+# Biên dịch TypeScript
+RUN npm run build
 
-CMD ["node", "dist/index.js", "/projects"]  # chạy server với repo riêng
+# Vô hiệu hóa healthcheck bằng cách trả về luôn true
+HEALTHCHECK CMD [ "true" ]
+
+# Chạy server MCP từ build
+CMD ["node", "dist/index.js", "/projects"]
