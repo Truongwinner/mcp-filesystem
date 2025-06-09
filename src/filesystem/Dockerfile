@@ -2,17 +2,14 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-# Copy toàn bộ source từ GitHub repo của Sếp
+# Copy toàn bộ source từ GitHub
 COPY . .
 
-# Cài đặt dependencies
-RUN npm install
+# Cài đặt production dependencies (nếu có package-lock.json thì dùng thêm)
+RUN npm install --omit=dev
 
-# Biên dịch TypeScript
-RUN npm run build
+# Tắt healthcheck
+HEALTHCHECK CMD ["true"]
 
-# Vô hiệu hóa healthcheck bằng cách trả về luôn true
-HEALTHCHECK CMD [ "true" ]
-
-# Chạy server MCP từ build
+# Chạy từ build đã có sẵn
 CMD ["node", "dist/index.js", "/projects"]
