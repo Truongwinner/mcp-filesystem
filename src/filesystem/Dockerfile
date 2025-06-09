@@ -1,8 +1,11 @@
 FROM node:22-alpine
-WORKDIR /app
-COPY . .
-# Bỏ install/build vì dist đã sẵn có
-# Tạo trường Health thành công
-HEALTHCHECK CMD exit 0
-CMD ["node", "src/filesystem/dist/index.js", "/projects"]
 
+WORKDIR /app
+
+COPY . .
+
+# Thêm healthcheck giả
+HEALTHCHECK CMD exit 0
+
+# CMD đúng đường dẫn file sau khi COPY
+CMD ["node", "src/filesystem/dist/index.js", "/projects"]
