@@ -4,10 +4,11 @@ WORKDIR /app
 
 COPY . .
 
+# Cài thêm typescript và shx để build
+RUN npm install -g typescript shx
+
 RUN npm install --omit=dev
 
-# Thêm healthcheck giả
 HEALTHCHECK CMD exit 0
 
-# CMD đúng đường dẫn file sau khi COPY
 CMD ["node", "src/filesystem/dist/index.js", "/projects"]
