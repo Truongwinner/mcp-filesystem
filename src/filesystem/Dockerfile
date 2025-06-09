@@ -2,14 +2,14 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-# Copy toàn bộ source từ GitHub
+# Copy toàn bộ source code (bao gồm dist/) đã build sẵn
 COPY . .
 
-# Cài đặt production dependencies (nếu có package-lock.json thì dùng thêm)
-RUN npm install --omit=dev
+# Cài dependencies nhưng không chạy prepare script
+RUN npm set-script prepare "" && npm install --omit=dev
 
-# Tắt healthcheck
+# Disable healthcheck nếu muốn tránh log Unhealthy
 HEALTHCHECK CMD ["true"]
 
-# Chạy từ build đã có sẵn
+# CMD khởi chạy server từ dist đã build sẵn
 CMD ["node", "dist/index.js", "/projects"]
