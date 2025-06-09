@@ -6,3 +6,5 @@ WORKDIR /app
 RUN npm install @modelcontextprotocol/server-filesystem
 
 CMD ["node", "node_modules/@modelcontextprotocol/server-filesystem/dist/index.js", "/projects"]
+
+HEALTHCHECK NONE
