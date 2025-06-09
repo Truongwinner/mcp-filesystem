@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY . .
 
+RUN npm install --omit=dev
+
 # Thêm healthcheck giả
 HEALTHCHECK CMD exit 0
 
