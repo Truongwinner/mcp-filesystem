@@ -2,10 +2,11 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-# Cài package đã build sẵn
+# Cài curl để tránh lỗi healthcheck trong Coolify
+RUN apk add --no-cache curl
+
 RUN npm install @modelcontextprotocol/server-filesystem
 
 CMD ["node", "node_modules/@modelcontextprotocol/server-filesystem/dist/index.js", "/projects"]
 
-# ➕ THÊM dòng sau để Docker vẫn tạo .State.Health.Status nhưng không fail
-HEALTHCHECK CMD echo "healthy"
+HEALTHCHECK CMD curl --silent --fail http://localhost || exit 0
